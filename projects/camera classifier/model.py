@@ -7,6 +7,7 @@ import os
 class Model:
     def __init__(self):
         self.model = LinearSVC()
+        self.is_trained = False 
 
     def _load_images_for_class(self, cls_dir):
         X = []
@@ -31,6 +32,10 @@ class Model:
             X2 = self._load_images_for_class('2')
             X += X2
             y += [2] * len(X2)
+        if os.path.isdir('3'):
+            X3 = self._load_images_for_class('3')
+            X += X3
+            y += [3] * len(X3)
 
         if len(X) == 0:
             print("No training images found. Please capture images for both classes before training.")
