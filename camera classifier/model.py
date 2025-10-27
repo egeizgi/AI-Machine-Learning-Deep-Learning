@@ -7,7 +7,6 @@ import os
 class Model:
     def __init__(self):
         self.model = LinearSVC()
-        self.is_trained = False  # <-- eklendi
 
     def _load_images_for_class(self, cls_dir):
         X = []
@@ -45,13 +44,13 @@ class Model:
         X = np.vstack(X)
         y = np.array(y)
         self.model.fit(X, y)
-        self.is_trained = True   # <-- eklendi
+        self.is_trained = True  
         print(f"Model trained successfully on {len(y)} samples.")
-        return True              # <-- eklendi
+        return True             
 
     def predict(self, frame):
         if not self.is_trained:
-            return None          # <-- eğitilmemişse sessizce None
+            return None         
         if frame is None or not frame[0]:
             return None
         rgb = frame[1]
