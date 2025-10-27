@@ -1,7 +1,5 @@
-# app.py (ilgili kısımlar)
-
 import tkinter as tk
-from tkinter import simpledialog, messagebox   # <-- messagebox ekledik
+from tkinter import simpledialog, messagebox   
 import cv2, os
 import PIL.Image, PIL.ImageTk
 import camera, model
@@ -35,11 +33,9 @@ class App:
         self.btn_class_two = tk.Button(self.window, text=self.classname_two, width=50, command=lambda: self.save_for_class(2))
         self.btn_class_two.pack(anchor=tk.CENTER, expand=True)
 
-        # Train butonu: eğitim sonrası Predict'i açan sarmalayıcı
         self.btn_train = tk.Button(self.window, text='Train Model', width=50, command=self.train_model)
         self.btn_train.pack(anchor=tk.CENTER, expand=True)
 
-        # Predict başlangıçta devre dışı
         self.btn_predict = tk.Button(self.window, text='Predict', width=50, command=self.predict, state=tk.DISABLED)
         self.btn_predict.pack(anchor=tk.CENTER, expand=True)
 
@@ -55,11 +51,9 @@ class App:
             self.btn_predict.config(state=tk.NORMAL)
             self.class_label.config(text='Trained ✓')
         else:
-            # eğitim gerçekleşmediyse uyar
             messagebox.showwarning("Training", "Training failed or insufficient data. Please capture images for BOTH classes.")
 
     def auto_predict_toggle(self):
-        # Eğitim yoksa otomatik tahmini açmayalım
         if not self.model.is_trained:
             messagebox.showinfo("Auto Predict", "Please train the model first.")
             self.auto_predict = False
@@ -83,7 +77,6 @@ class App:
         cv2.imwrite(out_path, gray)
 
         self.counters[class_number - 1] += 1
-        # Yeni görüntü kaydedince model artık "eski" sayılabilir
         if self.model.is_trained:
             self.model.is_trained = False
             self.btn_predict.config(state=tk.DISABLED)
